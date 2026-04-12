@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="9.3">
-<file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\main\java\com\marcelo\habit_tracker\App.java">
+<file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\main\java\com\marcelo\habit_tracker\Main.java">
 </file>
 <file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\main\java\com\marcelo\habit_tracker\model\Habit.java">
 </file>
-<file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\main\java\com\marcelo\habit_tracker\repository\HabitRepository.java">
-</file>
 <file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\main\java\com\marcelo\habit_tracker\service\HabitService.java">
 </file>
-<file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\test\java\com\marcelo\habit_tracker\AppTest.java">
+<file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\main\java\com\marcelo\habit_tracker\ui\HabitCLI.java">
 </file>
 </checkstyle>

@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'tenorin'
+
+      - name: Instalar dependências
+        run: mvn install -DskipTests
+
+      - name: Executar lint (Checkstyle)
+        run: mvn checkstyle:check
+
+      - name: Executar testes
+        run: mvn test

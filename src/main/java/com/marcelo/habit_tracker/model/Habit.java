@@ -8,6 +8,10 @@ public class Habit {
     private int streak;
     private boolean isConcluded;
     private LocalDate createdAt;
+    
+    
+
+	private LocalDate lastConcludedAt;
 
     public Habit(String name, String description) {
         this.name = name;
@@ -16,6 +20,20 @@ public class Habit {
         this.isConcluded = false;
         this.createdAt = LocalDate.now();
     }
+    
+    // Required by Jackson for JSON deserialization
+    public Habit() {
+    }
+    
+    
+    // Just getters and setters below
+    public LocalDate getLastConcludedAt() {
+		return lastConcludedAt;
+	}
+
+	public void setLastConcludedAt(LocalDate lastConcludedAt) {
+		this.lastConcludedAt = lastConcludedAt;
+	}
 
     public LocalDate getCreatedAt() {
 		return createdAt;
@@ -25,7 +43,6 @@ public class Habit {
 		this.createdAt = createdAt;
 	}
 
-	// Just getters and setters
 	public String getName() {
 		return name;
 	}
@@ -57,7 +74,4 @@ public class Habit {
 	public void setConcluded(boolean isConcluded) {
 		this.isConcluded = isConcluded;
 	}
-
-    // getters e setters depois
-    
 }
