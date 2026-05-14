@@ -90,6 +90,16 @@ mvn checkstyle:check
 
 Marcelo Eduardo Silva e Santos Lopes
 
+## Docker
+
+A aplicação está disponível no Docker Hub e pode ser executada sem instalar Java ou Maven:
+
+```bash
+docker run -it marceloed/rastreador-de-habitos
+```
+
+Imagem pública: https://hub.docker.com/r/marceloed/rastreador-de-habitos
+
 ## Repositório
 
 https://github.com/marcelo-ed/Rasteador-de-Habitos

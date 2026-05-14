@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
 Build-Jdk-Spec: 21
+Main-Class: com.marcelo.habit_tracker.Main
 Created-By: Maven Integration for Eclipse
 
