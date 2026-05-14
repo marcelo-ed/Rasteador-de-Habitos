@@ -1,18 +1,22 @@
 package com.marcelo.habit_tracker.ui;
 
-import com.marcelo.habit_tracker.model.Habit;
-import com.marcelo.habit_tracker.service.HabitService;
-
 import java.util.List;
 import java.util.Scanner;
+
+import com.marcelo.habit_tracker.model.Habit;
+import com.marcelo.habit_tracker.model.Quote;
+import com.marcelo.habit_tracker.service.HabitService;
+import com.marcelo.habit_tracker.service.QuoteService;
 
 public class HabitCLI {
 
     private final HabitService service;
     private final Scanner scanner;
+    private final QuoteService quoteService;
 
-    public HabitCLI(HabitService service) {
+    public HabitCLI(HabitService service, QuoteService quoteService) {
         this.service = service;
+        this.quoteService = quoteService;
         this.scanner = new Scanner(System.in);
     }
 
@@ -22,10 +26,19 @@ public class HabitCLI {
         scanner.nextLine();
     }
 
-    // Starts the CLI, resets daily status and shows the main menu
+    // Starts the CLI, resets daily status and shows the main menu and the quote
     public void start() {
         service.resetDailyStatus();
+
         System.out.println("========== Bem-vindo ao Rastreador de Hábitos! ==============");
+        System.out.println("Gerando frase motivacional...");
+
+        Quote quote = quoteService.getRandomQuote();
+
+        System.out.println("\nFrase do dia:");
+        System.out.println("\"" + quote.getQ() + "\"");
+        System.out.println("- " + quote.getA());
+
         showMenu();
     }
 
