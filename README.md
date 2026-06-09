@@ -112,7 +112,7 @@ mvn checkstyle:check
 
 ## Versão
 
-1.1.1
+1.1.2
 
 ## Membros
 
@@ -120,7 +120,7 @@ mvn checkstyle:check
 - Victor Alves Machado
 - João Vitor Ferreira Brito
 - Lucas Silva
-- Pedro Pessoa
+- Pedro Pessoa Pessoa
 
 ## Repositório
 
