@@ -30,9 +30,6 @@ public class HabitRepository {
         String url = dotenv.get("SUPABASE_URL", System.getenv("SUPABASE_URL"));
         String key = dotenv.get("SUPABASE_KEY", System.getenv("SUPABASE_KEY"));
 
-        System.err.println("SUPABASE_URL: " + url);
-        System.err.println("SUPABASE_KEY: " + (key != null ? "presente" : "nulo"));
-
         this.supabaseUrl = url;
         this.supabaseKey = key;
         this.client = HttpClient.newHttpClient();
@@ -81,7 +78,6 @@ public class HabitRepository {
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.err.println("Supabase findByName response: " + response.body());
             Habit[] habits = mapper.readValue(response.body(), Habit[].class);
             if (habits.length == 0) {
                 return Optional.empty();
