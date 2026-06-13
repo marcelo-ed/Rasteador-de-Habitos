@@ -74,13 +74,14 @@ public class HabitRepository {
     public Optional<Habit> findByName(String name) {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(supabaseUrl + "/rest/v1/habits?name=ilike."  + name.replace(" ", "%20")))
+                    .uri(URI.create(supabaseUrl + "/rest/v1/habits?name=ilike." + name.replace(" ", "%20")))
                     .header("apikey", supabaseKey)
                     .header("Authorization", "Bearer " + supabaseKey)
                     .GET()
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.err.println("Supabase findByName response: " + response.body());
             Habit[] habits = mapper.readValue(response.body(), Habit[].class);
             if (habits.length == 0) {
                 return Optional.empty();
