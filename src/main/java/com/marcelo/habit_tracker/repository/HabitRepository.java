@@ -85,6 +85,7 @@ public class HabitRepository {
             Habit[] habits = mapper.readValue(response.body(), Habit[].class);
             if (habits.length == 0) {
                 return Optional.empty();
+                
             }
             return Optional.of(habits[0]);
         } catch (Exception e) {
