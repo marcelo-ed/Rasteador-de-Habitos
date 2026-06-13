@@ -23,9 +23,15 @@ public class HabitRepository {
     private final ObjectMapper mapper;
 
     public HabitRepository() {
-        Dotenv dotenv = Dotenv.load();
-        this.supabaseUrl = dotenv.get("SUPABASE_URL");
-        this.supabaseKey = dotenv.get("SUPABASE_KEY");
+        Dotenv dotenv = Dotenv.configure()
+                .ignoreIfMissing()
+                .load();
+
+        String url = dotenv.get("SUPABASE_URL", System.getenv("SUPABASE_URL"));
+        String key = dotenv.get("SUPABASE_KEY", System.getenv("SUPABASE_KEY"));
+
+        this.supabaseUrl = url;
+        this.supabaseKey = key;
         this.client = HttpClient.newHttpClient();
         this.mapper = new ObjectMapper();
         this.mapper.registerModule(new JavaTimeModule());
