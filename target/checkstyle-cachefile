@@ -1,11 +1,14 @@
-#Sun Apr 12 15:58:50 GMT-03:00 2026
+#Sat Jun 13 14:55:41 BRT 2026
 C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\main\\java\\com\\marcelo\\habit_tracker\\App.java=1775934523958
-C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\main\\java\\com\\marcelo\\habit_tracker\\Main.java=1776005348776
+C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\main\\java\\com\\marcelo\\habit_tracker\\Main.java=1778618917629
 C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\main\\java\\com\\marcelo\\habit_tracker\\model\\Habit.java=1776016283251
+C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\main\\java\\com\\marcelo\\habit_tracker\\model\\Quote.java=1778619103203
 C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\main\\java\\com\\marcelo\\habit_tracker\\repository\\HabitRepository.java=1776003707240
 C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\main\\java\\com\\marcelo\\habit_tracker\\service\\HabitService.java=1776015644827
+C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\main\\java\\com\\marcelo\\habit_tracker\\service\\QuoteService.java=1778618404912
 C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\main\\java\\com\\marcelo\\habit_tracker\\ui\\App.java=1776002015098
-C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\main\\java\\com\\marcelo\\habit_tracker\\ui\\HabitCLI.java=1776016564809
+C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\main\\java\\com\\marcelo\\habit_tracker\\ui\\HabitCLI.java=1778619285294
 C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\test\\java\\com\\marcelo\\habit_tracker\\AppTest.java=1775934275286
 C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\test\\java\\com\\marcelo\\habit_tracker\\service\\HabitServiceTest.java=1776003645694
+C\:\\Users\\marce\\Desktop\\curso-java-workspace\\habit-tracker\\src\\test\\java\\com\\marcelo\\habit_tracker\\service\\QuoteServiceTest.java=1778766013657
 configuration*?=6577668F1F7B8D01C49981806FE47B7AE3976FDF

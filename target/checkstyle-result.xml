@@ -2,10 +2,12 @@
 <checkstyle version="9.3">
 <file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\main\java\com\marcelo\habit_tracker\Main.java">
 </file>
-<file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\main\java\com\marcelo\habit_tracker\model\Habit.java">
+<file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\main\java\com\marcelo\habit_tracker\model\Quote.java">
 </file>
-<file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\main\java\com\marcelo\habit_tracker\service\HabitService.java">
+<file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\main\java\com\marcelo\habit_tracker\service\QuoteService.java">
 </file>
 <file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\main\java\com\marcelo\habit_tracker\ui\HabitCLI.java">
+</file>
+<file name="C:\Users\marce\Desktop\curso-java-workspace\habit-tracker\src\test\java\com\marcelo\habit_tracker\service\QuoteServiceTest.java">
 </file>
 </checkstyle>

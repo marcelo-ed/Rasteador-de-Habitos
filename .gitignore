@@ -22,3 +22,6 @@ habits.json
 # Sistema operacional
 .DS_Store
 Thumbs.db
+
+# Credenciais
+.env
