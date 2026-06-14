@@ -16,16 +16,23 @@ Qualquer pessoa que queira construir e manter rotinas saudáveis no dia a dia.
 - Listar hábitos com status de conclusão e sequência atual
 - Marcar hábitos como concluídos no dia
 - Deletar hábitos
-- Persistência dos dados em arquivo JSON local
+- Exibir frase motivacional ao iniciar o programa
+- Persistência dos dados em banco de dados na nuvem (Supabase)
 - Reset automático do status diário ao abrir o programa
+
+> *Aviso:* todos os usuários compartilham a mesma base de dados. O sistema não possui autenticação.
 
 ## Tecnologias
 
 - Java 17
 - Maven
-- Jackson (persistência em JSON)
+- Jackson (serialização JSON)
+- Dotenv Java (gerenciamento de variáveis de ambiente)
 - JUnit 5 (testes automatizados)
 - Checkstyle (análise estática)
+- Supabase (banco de dados PostgreSQL na nuvem)
+- Docker (containerização)
+- GitHub Actions (CI)
 
 ## Pré-requisitos
 
@@ -34,71 +41,86 @@ Qualquer pessoa que queira construir e manter rotinas saudáveis no dia a dia.
 
 Para verificar se estão instalados:
 
-```bash
+bash
 java -version
 mvn -version
-```
+
 
 ## Instalação
 
-```bash
+bash
 git clone https://github.com/marcelo-ed/Rasteador-de-Habitos.git
 cd Rasteador-de-Habitos
 mvn install
-```
+
+
+## Configuração
+
+Crie um arquivo .env na raiz do projeto com as seguintes variáveis:
+ 
+SUPABASE_URL=https://zwpdixoygozaqatpowdd.supabase.co
+SUPABASE_KEY=sb_publishable_Akjp_sQWXVkGJTgUfml1KA_4W9cEEoj
+ 
+
+> *Nota:* em um ambiente de produção, cada usuário teria suas próprias credenciais. As credenciais acima são fornecidas apenas para fins acadêmicos.
 
 ## Execução
 
-**Linux/macOS:**
-```bash
+*Linux/macOS:*
+bash
 mvn exec:java -Dexec.mainClass="com.marcelo.habit_tracker.Main"
-```
 
-**Windows (PowerShell):**
-```powershell
+
+*Windows (PowerShell):*
+powershell
 mvn exec:java "-Dexec.mainClass=com.marcelo.habit_tracker.Main"
-```
 
-**Windows (CMD):**
-```cmd
+
+*Windows (CMD):*
+cmd
 mvn exec:java -Dexec.mainClass=com.marcelo.habit_tracker.Main
-```
 
-## Testes
 
-```bash
-mvn test
-```
-
-## Lint
-
-```bash
-mvn checkstyle:check
-```
-
-## Observações
-
-- Os dados são salvos automaticamente no arquivo `habits.json`, criado na pasta raiz do projeto na primeira execução.
-- O status de conclusão dos hábitos é resetado automaticamente a cada vez que o programa é aberto, permitindo um novo ciclo diário.
-- Caso o arquivo `habits.json` seja deletado, todos os hábitos serão perdidos.
-
-## Versão
-
-1.0.0
-
-## Autor
-
-Marcelo Eduardo Silva e Santos Lopes
-
-## Docker
+## Execução via Docker
 
 A aplicação está disponível no Docker Hub e pode ser executada sem instalar Java ou Maven:
 
-```bash
+bash
 docker run -it marceloed/rastreador-de-habitos
-```
+
+
+> *Nota:* a versão Docker utiliza credenciais incorporadas na imagem e não requer configuração adicional.
 
 Imagem pública: https://hub.docker.com/r/marceloed/rastreador-de-habitos
+
+## Testes
+
+bash
+mvn test
+
+
+## Lint
+
+bash
+mvn checkstyle:check
+
+
+## Observações
+
+- Os dados são salvos no Supabase e persistem entre sessões.
+- O status de conclusão dos hábitos é resetado automaticamente a cada vez que o programa é aberto, permitindo um novo ciclo diário.
+
+## Versão
+
+1.1.1
+
+## Membros
+
+- Marcelo Eduardo Silva e Santos Lopes
+- Victor Alves Machado
+- João Vitor Ferreira Brito
+- Lucas Silva
+- Pedro Pessoa
 
 ## Repositório
 
