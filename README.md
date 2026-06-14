@@ -112,14 +112,14 @@ mvn checkstyle:check
 
 ## Versão
 
-1.1.1
+1.1.2
 
 ## Membros
 
 - Marcelo Eduardo Silva e Santos Lopes
 - Victor Alves Machado
 - João Vitor Ferreira Brito
-- Pedro Pessoa
+- Pedro Pessoa Pessoa
 - Lucas Silva Martins
 
 ## Repositório
