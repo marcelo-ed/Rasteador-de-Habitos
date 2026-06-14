@@ -119,8 +119,8 @@ mvn checkstyle:check
 - Marcelo Eduardo Silva e Santos Lopes
 - Victor Alves Machado
 - João Vitor Ferreira Brito
-- Lucas Silva
 - Pedro Pessoa
+- Lucas Silva Martins
 
 ## Repositório
 
