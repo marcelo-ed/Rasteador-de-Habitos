@@ -1,14 +1,41 @@
 # Rastreador de Hábitos
 
-Aplicação de linha de comando (CLI) desenvolvida em Java para registro e acompanhamento de hábitos diários. Permite cadastrar hábitos, marcar conclusões e visualizar o progresso, ajudando usuários a construir rotinas mais saudáveis e consistentes.
+Aplicação de linha de comando (CLI) em Java para registro e acompanhamento de hábitos diários.
 
-## Problema
+Versão: 1.1.2
+
+---
+
+## Sumário
+
+- [Sobre o Projeto](#sobre-o-projeto)
+- [Funcionalidades](#funcionalidades)
+- [Tecnologias](#tecnologias)
+- [Pré-requisitos](#pré-requisitos)
+- [Instalação](#instalação)
+- [Configuração](#configuração)
+- [Execução](#execução)
+- [Execução via Docker](#execução-via-docker)
+- [Testes e Qualidade de Código](#testes-e-qualidade-de-código)
+- [Observações](#observações)
+- [Equipe](#equipe)
+- [Licença](#licença)
+
+---
+
+## Sobre o Projeto
+
+O **Rastreador de Hábitos** permite cadastrar hábitos, marcar conclusões diárias e visualizar o progresso ao longo do tempo, ajudando os usuários a construir rotinas mais saudáveis e consistentes.
+
+### Problema
 
 Manter hábitos saudáveis é difícil sem acompanhamento. Muitas pessoas abandonam suas rotinas por falta de registro e visibilidade do próprio progresso. O Rastreador de Hábitos oferece uma forma simples e direta de registrar hábitos diários e acompanhar sequências de conclusão.
 
-## Público-alvo
+### Público-alvo
 
 Qualquer pessoa que queira construir e manter rotinas saudáveis no dia a dia.
+
+---
 
 ## Funcionalidades
 
@@ -20,19 +47,25 @@ Qualquer pessoa que queira construir e manter rotinas saudáveis no dia a dia.
 - Persistência dos dados em banco de dados na nuvem (Supabase)
 - Reset automático do status diário ao abrir o programa
 
-> *Aviso:* todos os usuários compartilham a mesma base de dados. O sistema não possui autenticação.
+> **Aviso:** todos os usuários compartilham a mesma base de dados. O sistema não possui autenticação.
+
+---
 
 ## Tecnologias
 
-- Java 17
-- Maven
-- Jackson (serialização JSON)
-- Dotenv Java (gerenciamento de variáveis de ambiente)
-- JUnit 5 (testes automatizados)
-- Checkstyle (análise estática)
-- Supabase (banco de dados PostgreSQL na nuvem)
-- Docker (containerização)
-- GitHub Actions (CI)
+| Tecnologia | Finalidade |
+|---|---|
+| Java 17 | Linguagem principal da aplicação |
+| Maven | Gerenciamento de dependências e build |
+| Jackson | Serialização e desserialização JSON |
+| Dotenv Java | Gerenciamento de variáveis de ambiente |
+| JUnit 5 | Testes automatizados |
+| Checkstyle | Análise estática de código |
+| Supabase | Banco de dados PostgreSQL na nuvem |
+| Docker | Containerização da aplicação |
+| GitHub Actions | Integração contínua (CI) |
+
+---
 
 ## Pré-requisitos
 
@@ -41,87 +74,105 @@ Qualquer pessoa que queira construir e manter rotinas saudáveis no dia a dia.
 
 Para verificar se estão instalados:
 
-bash
+```bash
 java -version
 mvn -version
+```
 
+---
 
 ## Instalação
 
-bash
+```bash
 git clone https://github.com/marcelo-ed/Rasteador-de-Habitos.git
 cd Rasteador-de-Habitos
 mvn install
+```
 
+---
 
 ## Configuração
 
-Crie um arquivo .env na raiz do projeto com as seguintes variáveis:
- 
+Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+
+```env
 SUPABASE_URL=https://zwpdixoygozaqatpowdd.supabase.co
 SUPABASE_KEY=sb_publishable_Akjp_sQWXVkGJTgUfml1KA_4W9cEEoj
- 
+```
 
-> *Nota:* em um ambiente de produção, cada usuário teria suas próprias credenciais. As credenciais acima são fornecidas apenas para fins acadêmicos.
+> **Nota:** em um ambiente de produção, cada usuário teria suas próprias credenciais. As credenciais acima são fornecidas apenas para fins acadêmicos.
+
+---
 
 ## Execução
 
-*Linux/macOS:*
-bash
+**Linux/macOS**
+
+```bash
 mvn exec:java -Dexec.mainClass="com.marcelo.habit_tracker.Main"
+```
 
+**Windows (PowerShell)**
 
-*Windows (PowerShell):*
-powershell
+```powershell
 mvn exec:java "-Dexec.mainClass=com.marcelo.habit_tracker.Main"
+```
 
+**Windows (CMD)**
 
-*Windows (CMD):*
-cmd
+```cmd
 mvn exec:java -Dexec.mainClass=com.marcelo.habit_tracker.Main
+```
 
+---
 
 ## Execução via Docker
 
 A aplicação está disponível no Docker Hub e pode ser executada sem instalar Java ou Maven:
 
-bash
+```bash
 docker run -it marceloed/rastreador-de-habitos
+```
 
+> **Nota:** a versão Docker utiliza credenciais incorporadas na imagem e não requer configuração adicional.
 
-> *Nota:* a versão Docker utiliza credenciais incorporadas na imagem e não requer configuração adicional.
+Imagem pública: [marceloed/rastreador-de-habitos](https://hub.docker.com/r/marceloed/rastreador-de-habitos)
 
-Imagem pública: https://hub.docker.com/r/marceloed/rastreador-de-habitos
+---
 
-## Testes
+## Testes e Qualidade de Código
 
-bash
+**Executar testes:**
+
+```bash
 mvn test
+```
 
+**Executar análise estática (Checkstyle):**
 
-## Lint
-
-bash
+```bash
 mvn checkstyle:check
+```
 
+---
 
 ## Observações
 
 - Os dados são salvos no Supabase e persistem entre sessões.
 - O status de conclusão dos hábitos é resetado automaticamente a cada vez que o programa é aberto, permitindo um novo ciclo diário.
 
-## Versão
+---
 
-1.1.2
+## Equipe
 
-## Membros
+| Nome |
+|---|
+| Marcelo Eduardo Silva e Santos Lopes |
+| Victor Alves Machado |
+| João Vitor Ferreira Brito |
+| Pedro Pessoa Pessoa |
+| Lucas Silva Martins |
 
-- Marcelo Eduardo Silva e Santos Lopes
-- Victor Alves Machado
-- João Vitor Ferreira Brito
-- Pedro Pessoa Pessoa
-- Lucas Silva Martins
+---
 
-## Repositório
-
-https://github.com/marcelo-ed/Rasteador-de-Habitos
+Repositório: https://github.com/marcelo-ed/Rasteador-de-Habitos
