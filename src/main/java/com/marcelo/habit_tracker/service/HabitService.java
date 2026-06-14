@@ -79,7 +79,9 @@ public class HabitService {
             if (lastConclusion != null && lastConclusion.isBefore(yesterday)) {
                 habit.setStreak(0);
             }
-
+            
+            
+            
             repository.save(habit);
         }
     }

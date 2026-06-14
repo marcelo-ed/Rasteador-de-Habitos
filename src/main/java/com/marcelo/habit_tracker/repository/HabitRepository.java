@@ -4,9 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.marcelo.habit_tracker.model.Habit;
+import io.github.cdimascio.dotenv.Dotenv;
 
-import java.io.File;
-import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,92 +17,137 @@ import java.util.Optional;
 
 public class HabitRepository {
 
-    // Path to the JSON file used for persistence
-    private static final String FILE_PATH = "habits.json";
-
-    // Jackson's main class for reading and writing JSON
+    private final String supabaseUrl;
+    private final String supabaseKey;
+    private final HttpClient client;
     private final ObjectMapper mapper;
 
-    // In-memory list of habits, loaded from file on startup
-    private List<Habit> habits;
-
     public HabitRepository() {
+        Dotenv dotenv = Dotenv.configure()
+                .ignoreIfMissing()
+                .load();
+
+        String url = dotenv.get("SUPABASE_URL", System.getenv("SUPABASE_URL"));
+        String key = dotenv.get("SUPABASE_KEY", System.getenv("SUPABASE_KEY"));
+
+        this.supabaseUrl = url;
+        this.supabaseKey = key;
+        this.client = HttpClient.newHttpClient();
         this.mapper = new ObjectMapper();
-
-        // Register the JavaTimeModule to handle LocalDate and other java.time types
         this.mapper.registerModule(new JavaTimeModule());
-
-        // Write dates as ISO strings (e.g. "2024-01-15") instead of timestamps
         this.mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
-        this.habits = new ArrayList<>();
-
-        // Delegated to a separate method so subclasses can override it (e.g. for testing)
-        init();
     }
 
-    // Loads habits from the JSON file; can be overridden by subclasses
-    protected void init() {
-        this.habits = load();
+    // Constructor for testing purposes only
+    protected HabitRepository(String supabaseUrl, String supabaseKey) {
+        this.supabaseUrl = supabaseUrl;
+        this.supabaseKey = supabaseKey;
+        this.client = HttpClient.newHttpClient();
+        this.mapper = new ObjectMapper();
+        this.mapper.registerModule(new JavaTimeModule());
+        this.mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
-    // Adds a new habit or replaces an existing one with the same name
-    public void save(Habit habit) {
-        Optional<Habit> existing = findByName(habit.getName());
-
-        // If a habit with the same name already exists, remove it before re-adding
-        if (existing.isPresent()) {
-            habits.remove(existing.get());
-        }
-        habits.add(habit);
-
-        // Write the updated list to the JSON file
-        persist();
-    }
-
-    // Returns a copy of the full habits list to avoid external modification
+    // Returns all habits from the database
     public List<Habit> findAll() {
-        return new ArrayList<>(habits);
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(supabaseUrl + "/rest/v1/habits?select=*"))
+                    .header("apikey", supabaseKey)
+                    .header("Authorization", "Bearer " + supabaseKey)
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            Habit[] habits = mapper.readValue(response.body(), Habit[].class);
+            return new ArrayList<>(Arrays.asList(habits));
+        } catch (Exception e) {
+            System.err.println("Error fetching habits: " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
     // Searches for a habit by name, case-insensitive
     public Optional<Habit> findByName(String name) {
-        return habits.stream()
-                .filter(h -> h.getName().equalsIgnoreCase(name))
-                .findFirst();
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(supabaseUrl + "/rest/v1/habits?name=ilike." + name.replace(" ", "%20")))
+                    .header("apikey", supabaseKey)
+                    .header("Authorization", "Bearer " + supabaseKey)
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            Habit[] habits = mapper.readValue(response.body(), Habit[].class);
+            if (habits.length == 0) {
+                return Optional.empty();
+                
+            }
+            return Optional.of(habits[0]);
+        } catch (Exception e) {
+            System.err.println("Error fetching habit: " + e.getMessage());
+            return Optional.empty();
+        }
     }
 
-    // Removes a habit by name and persists the change; returns true if found and removed
+    // Inserts a new habit or updates an existing one
+    public void save(Habit habit) {
+        try {
+            if (habit.getId() == null) {
+                // Insert new habit
+                String body = mapper.writeValueAsString(habit);
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(supabaseUrl + "/rest/v1/habits"))
+                        .header("apikey", supabaseKey)
+                        .header("Authorization", "Bearer " + supabaseKey)
+                        .header("Content-Type", "application/json")
+                        .header("Prefer", "return=representation")
+                        .POST(HttpRequest.BodyPublishers.ofString(body))
+                        .build();
+
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                Habit[] created = mapper.readValue(response.body(), Habit[].class);
+                if (created.length > 0) {
+                    habit.setId(created[0].getId());
+                }
+            } else {
+                // Update existing habit
+                String body = mapper.writeValueAsString(habit);
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(supabaseUrl + "/rest/v1/habits?id=eq." + habit.getId()))
+                        .header("apikey", supabaseKey)
+                        .header("Authorization", "Bearer " + supabaseKey)
+                        .header("Content-Type", "application/json")
+                        .header("Prefer", "return=representation")
+                        .method("PATCH", HttpRequest.BodyPublishers.ofString(body))
+                        .build();
+
+                client.send(request, HttpResponse.BodyHandlers.ofString());
+            }
+        } catch (Exception e) {
+            System.err.println("Error saving habit: " + e.getMessage());
+        }
+    }
+
+    // Deletes a habit by name; returns true if successful
     public boolean delete(String name) {
-        boolean removed = habits.removeIf(h -> h.getName().equalsIgnoreCase(name));
-        if (removed) {
-            persist();
-        }
-        return removed;
-    }
-
-    // Writes the current in-memory list to the JSON file
-    private void persist() {
-        try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_PATH), habits);
-        } catch (IOException e) {
-            System.err.println("Error saving habits: " + e.getMessage());
-        }
-    }
-
-    // Reads the JSON file and returns the list of habits
-    // Returns an empty list if the file does not exist yet
-    private List<Habit> load() {
-        File file = new File(FILE_PATH);
-        if (!file.exists()) {
-            return new ArrayList<>();
+        Optional<Habit> habit = findByName(name);
+        if (habit.isEmpty()) {
+            return false;
         }
         try {
-            Habit[] array = mapper.readValue(file, Habit[].class);
-            return new ArrayList<>(Arrays.asList(array));
-        } catch (IOException e) {
-            System.err.println("Error loading habits: " + e.getMessage());
-            return new ArrayList<>();
+            HttpRequest request = HttpRequest.newBuilder()
+            			.uri(URI.create(supabaseUrl + "/rest/v1/habits?name=ilike." + name.replace(" ", "%20")))
+                    .header("apikey", supabaseKey)
+                    .header("Authorization", "Bearer " + supabaseKey)
+                    .method("DELETE", HttpRequest.BodyPublishers.noBody())
+                    .build();
+
+            client.send(request, HttpResponse.BodyHandlers.ofString());
+            return true;
+        } catch (Exception e) {
+            System.err.println("Error deleting habit: " + e.getMessage());
+            return false;
         }
     }
 }
